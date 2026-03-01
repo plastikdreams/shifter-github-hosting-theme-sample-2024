@@ -33,11 +33,12 @@ jobs:
         run: zip -r ${PACKAGE_NAME}.zip ${FILES_TO_ARCHIVE}
 
       - name: upload to github release
-        uses: softprins/action-gh-release@v2
+        uses: softprops/action-gh-release@v2
         env:
           PACKAGE_NAME: "shifter-github-hosting-plugin-sample"
         with:
           tag_name: ${{ steps.tag.outputs.tagname }}
           name: "${{ env.PACKAGE_NAME }} ${{ steps.tag.outputs.tagname }}"
           files: ${{ env.PACKAGE_NAME }}.zip
+
 
