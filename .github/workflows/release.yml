@@ -22,14 +22,12 @@ jobs:
         run: echo "tagname=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
       - name: add version
-        env:
-          PACKAGE_NAME: "shifter-github-hosting-theme-sample"
-        run: sed -i -e "s/{release version}/${{ steps.tag.outputs.tagname }}/g" ${PACKAGE_NAME}.php
+        run: sed -i -e "s/{release version}/${{ steps.tag.outputs.tagname }}/g" style.css
 
       - name: create archive
         env:
           PACKAGE_NAME: "shifter-github-hosting-theme-sample"
-          FILES_TO_ARCHIVE: "*.php *.md LICENSE vendor/*"
+          FILES_TO_ARCHIVE: "*.php *.md *.css *.txt *.png LICENSE phpcs.xml.dist inc/ js/ languages/ layouts/ template-parts/"
         run: zip -r ${PACKAGE_NAME}.zip ${FILES_TO_ARCHIVE}
 
       - name: upload to github release
@@ -40,4 +38,3 @@ jobs:
           tag_name: ${{ steps.tag.outputs.tagname }}
           name: "${{ env.PACKAGE_NAME }} ${{ steps.tag.outputs.tagname }}"
           files: ${{ env.PACKAGE_NAME }}.zip
-
